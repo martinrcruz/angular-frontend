@@ -1,0 +1,73 @@
+<div class="container">
+<div class="row header pt-5 mt-5">
+  <h1 class="text-center">Angular 13 / Java Spring Boot -  API Consuming</h1>
+</div>
+
+
+<div class="row">
+  <div class="col-3">
+    <app-modal-add-vehiculo (refreshTable)="refreshTable()"></app-modal-add-vehiculo>
+  </div>
+  <div class="col-3 offset-6">
+    <mat-form-field appearance="standard">
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+  </div>
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="idVehiculo" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.idVehiculo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="marca" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MARCA </th>
+      <td mat-cell *matCellDef="let element"> {{element.marca}} </td>
+    </ng-container>
+    <ng-container matColumnDef="modelo" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MODELO </th>
+      <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="editar" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> EDITAR </th>
+      <td mat-cell *matCellDef="let element">
+        <a class="btn btn-warning fa-solid fa-pen-to-square" style="color:white;"
+          (click)="updateVehiculo(element.idVehiculo)" data-bs-toggle="modal" data-bs-target="#modal-vehiculo-edit"></a>
+
+        <app-modal-edit-vehiculo (refreshTable)="refreshTable()"></app-modal-edit-vehiculo>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eliminar" class="table-head">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ELIMINAR </th>
+      <td mat-cell *matCellDef="let element">
+        <a class="btn btn-danger fa-solid fa-trash-can" style="color:white;"
+          (click)="deleteVehiculo(element.idVehiculo)"></a>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+</div>
+
